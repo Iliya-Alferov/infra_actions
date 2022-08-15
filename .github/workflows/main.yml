@@ -70,18 +70,15 @@ jobs:
       runs-on: ubuntu_latest
       needs: build_and_push_to_docker_hub
       steps:
-      - name: executing remote ssh commands to deploy
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USER }}
-          key: ${{ secrets.SSH_KEY }}
-          passphrase: ${{ secrets.PASSPHRASE }}
-          script: |
-            # Выполняет pull образа с DockerHub
-            sudo docker pull iliyaalferov2015/gates
-            # остановка всех контейнеров
-            sudo docker stop $(sudo docker ps -a -q)
-            sudo docker run --rm -d -p 5000:5000 iliyaalferov2015/gates  
-            #не запускается deploy
+        - name: executing remote ssh commands to deploy
+          uses: appleboy/ssh-action@master
+          with:
+            host: ${{ secrets.HOST }}
+            username: ${{ secrets.USER }}
+            key: ${{ secrets.SSH_KEY }}
+            passphrase: ${{ secrets.PASSPHRASE }}
+            script: |
+              sudo docker pull iliyaalferov2015/gates
+              sudo docker stop $(sudo docker ps -a -q)
+              sudo docker run --rm -d -p 5000:5000 iliyaalferov2015/gates  
           
