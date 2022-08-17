@@ -81,4 +81,5 @@ jobs:
               sudo docker pull iliyaalferov2015/gates
               sudo docker stop $(sudo docker ps -a -q)
               sudo docker run --rm -d -p 5000:5000 iliyaalferov2015/gates 
+              #1
           
